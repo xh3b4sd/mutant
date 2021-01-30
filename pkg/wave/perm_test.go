@@ -26,7 +26,7 @@ func Test_Wave_Lifecycle(t *testing.T) {
 			shift: func(p mutant.Interface) {
 				p.Shift()
 			},
-			index: []int{0, 0, 1},
+			index: []int{1, 0, 0},
 		},
 		// Case 2 ensures the permutation works as expected.
 		{
@@ -43,7 +43,7 @@ func Test_Wave_Lifecycle(t *testing.T) {
 				p.Shift()
 				p.Shift()
 			},
-			index: []int{1, 0, 0},
+			index: []int{0, 0, 1},
 		},
 		// Case 4 ensures mutating beyond capacity is idempotent.
 		{
@@ -56,7 +56,7 @@ func Test_Wave_Lifecycle(t *testing.T) {
 				p.Shift()
 				p.Shift()
 			},
-			index: []int{1, 0, 0},
+			index: []int{0, 0, 1},
 		},
 		// Case 5 ensures resetting starts over again.
 		{
@@ -88,7 +88,7 @@ func Test_Wave_Lifecycle(t *testing.T) {
 
 				p.Shift()
 			},
-			index: []int{0, 0, 1},
+			index: []int{1, 0, 0},
 		},
 	}
 

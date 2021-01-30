@@ -54,7 +54,7 @@ func (w *Wave) Shift() {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
 
-	if w.index[0] == 1 {
+	if w.index[len(w.index)-1] == 1 {
 		select {
 		case <-w.Check():
 			return
@@ -67,14 +67,14 @@ func (w *Wave) Shift() {
 			var s bool
 			for i := range w.index {
 				if w.index[i] == 1 {
-					p = i - 1
+					p = i + 1
 					s = true
 					break
 				}
 			}
 
 			if !s {
-				p = len(w.index) - 1
+				p = 0
 			}
 		}
 
