@@ -1,4 +1,4 @@
-package perm
+package wave
 
 import (
 	"reflect"
@@ -10,7 +10,7 @@ import (
 	"github.com/xh3b4sd/mutant"
 )
 
-func Test_Perm_Lifecycle(t *testing.T) {
+func Test_Wave_Lifecycle(t *testing.T) {
 	testCases := []struct {
 		shift func(p mutant.Interface)
 		index []int
@@ -26,7 +26,7 @@ func Test_Perm_Lifecycle(t *testing.T) {
 			shift: func(p mutant.Interface) {
 				p.Shift()
 			},
-			index: []int{0, 0, 1},
+			index: []int{1, 0, 0},
 		},
 		// Case 2 ensures the permutation works as expected.
 		{
@@ -43,42 +43,9 @@ func Test_Perm_Lifecycle(t *testing.T) {
 				p.Shift()
 				p.Shift()
 			},
-			index: []int{0, 1, 1},
+			index: []int{0, 0, 1},
 		},
-		// Case 4 ensures the permutation works as expected.
-		{
-			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-			},
-			index: []int{1, 0, 0},
-		},
-		// Case 5 ensures the permutation works as expected.
-		{
-			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-			},
-			index: []int{1, 0, 1},
-		},
-		// Case 6 ensures the permutation works as expected.
-		{
-			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-			},
-			index: []int{1, 1, 0},
-		},
-		// Case 7 ensures the permutation works as expected.
+		// Case 4 ensures mutating beyond capacity is idempotent.
 		{
 			shift: func(p mutant.Interface) {
 				p.Shift()
@@ -89,34 +56,11 @@ func Test_Perm_Lifecycle(t *testing.T) {
 				p.Shift()
 				p.Shift()
 			},
-			index: []int{1, 1, 1},
+			index: []int{0, 0, 1},
 		},
-		// Case 8 ensures mutating beyond capacity is idempotent.
+		// Case 5 ensures resetting starts over again.
 		{
 			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-			},
-			index: []int{1, 1, 1},
-		},
-		// Case 9 ensures resetting starts over again.
-		{
-			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
 				p.Shift()
 				p.Shift()
 				p.Shift()
@@ -129,14 +73,9 @@ func Test_Perm_Lifecycle(t *testing.T) {
 			},
 			index: []int{0, 0, 0},
 		},
-		// Case 10 ensures resetting starts over again.
+		// Case 6 ensures resetting starts over again.
 		{
 			shift: func(p mutant.Interface) {
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
-				p.Shift()
 				p.Shift()
 				p.Shift()
 				p.Shift()
@@ -149,7 +88,7 @@ func Test_Perm_Lifecycle(t *testing.T) {
 
 				p.Shift()
 			},
-			index: []int{0, 0, 1},
+			index: []int{1, 0, 0},
 		},
 	}
 
@@ -160,7 +99,7 @@ func Test_Perm_Lifecycle(t *testing.T) {
 			var p mutant.Interface
 			{
 				c := Config{
-					Capacity: []int{1, 1, 1},
+					Length: 3,
 				}
 
 				p, err = New(c)
